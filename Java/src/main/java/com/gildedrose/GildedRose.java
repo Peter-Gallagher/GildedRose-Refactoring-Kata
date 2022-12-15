@@ -9,6 +9,7 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
+
             if (handledItemAsSpecialCase(item)){
                 continue;
             }
@@ -28,7 +29,7 @@ class GildedRose {
                     }
             }
 
-            decrementSellInIfApplicable(item);
+            item.sellIn = item.sellIn - 1;
 
             if (item.sellIn < 0) {
                 if (item.name.equals("Aged Brie")){
@@ -39,6 +40,7 @@ class GildedRose {
                     changeQualityWithinLimits(item, -1);
                 }
             }
+
         }
     }
 
@@ -50,11 +52,6 @@ class GildedRose {
             return true;
         }
         return false;
-    }
-    private void decrementSellInIfApplicable(Item item){
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            item.sellIn = item.sellIn - 1;
-        }
     }
 
     private void changeQualityWithinLimits(Item item, int amount_to_change){
