@@ -7,7 +7,6 @@ class GildedRose {
         this.items = items;
     }
 
-    //Test
     public void updateQuality() {
         for (Item item : items) {
             if (handledItemAsSpecialCase(item)){
@@ -23,17 +22,12 @@ class GildedRose {
                     item.quality = item.quality + 1;
 
                     if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
+                        if (item.sellIn < 6) {
+                            changeQualityWithoutPassingLimits(item, 2);
+                        } else if (item.sellIn < 11) {
+                            changeQualityWithoutPassingLimits(item, 1);
                         }
 
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
                     }
                 }
             }
@@ -69,6 +63,15 @@ class GildedRose {
     private void decrementSellInIfApplicable(Item item){
         if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
             item.sellIn = item.sellIn - 1;
+        }
+    }
+
+    private void changeQualityWithoutPassingLimits(Item item, int amount_to_change){
+        item.quality += amount_to_change;
+        if (item.quality < 0){
+            item.quality = 0;
+        } else if (item.quality > 50) {
+            item.quality = 50;
         }
     }
 
