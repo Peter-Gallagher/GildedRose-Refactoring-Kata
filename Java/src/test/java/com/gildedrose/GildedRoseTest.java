@@ -1,6 +1,5 @@
 package com.gildedrose;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +29,22 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(0, app.items[0].quality);
+    }
+
+    @Test
+    void qualityShouldDropBy1() {
+        Item[] items = new Item[] { new Item("ladder", 5, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(19, app.items[0].quality);
+    }
+
+    @Test
+    void qualityShouldDropBy2WhenSellin0() {
+        Item[] items = new Item[] { new Item("ladder", 0, 20) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(18, app.items[0].quality);
     }
 
     @Test
