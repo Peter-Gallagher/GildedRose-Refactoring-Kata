@@ -57,6 +57,9 @@ class GildedRose {
     private boolean handledItemAsSpecialCase(Item item){
         if (item.name.equals("Sulfuras, Hand of Ragnaros")){
             return true;
+        } else if(item.name.equals("foo")){
+            item.name = "fixme";
+            return true;
         }
         return false;
     }
