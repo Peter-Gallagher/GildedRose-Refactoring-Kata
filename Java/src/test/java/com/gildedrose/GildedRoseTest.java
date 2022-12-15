@@ -42,6 +42,14 @@ class GildedRoseTest {
     }
 
     @Test
+    void sulfurasSellinShouldNotChange() {
+        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 10, 80) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(10, app.items[0].sellIn);
+    }
+
+    @Test
     void agedBrieWithNegativeSellinShouldIncreaseInQuality() {
         Item[] items = new Item[] { new Item("Aged Brie", -5, 25) };
         GildedRose app = new GildedRose(items);
