@@ -8,16 +8,17 @@ class GildedRose {
     int minAllowedQuality = 0;
     int maxAllowedQuality = 50;
 
-    ArrayList<String> itemsIncreaseValueAsTheyAge;
+    ArrayList<String> itemsIncreaseQualityAsTheyAge;
 
     public GildedRose(Item[] items) {
         this.items = items;
-        itemsIncreaseValueAsTheyAge = new ArrayList<>();
-        itemsIncreaseValueAsTheyAge.add("Backstage passes to a TAFKAL80ETC concert");
-        itemsIncreaseValueAsTheyAge.add("Aged Brie");
+        itemsIncreaseQualityAsTheyAge = new ArrayList<>();
+        itemsIncreaseQualityAsTheyAge.add("Backstage passes to a TAFKAL80ETC concert");
+        itemsIncreaseQualityAsTheyAge.add("Aged Brie");
     }
 
     public void updateQuality() {
+
         for (Item item : items) {
 
             if (handledItemAsSpecialCase(item)){
@@ -27,11 +28,7 @@ class GildedRose {
             if (qualityIncreasesAsItemAges(item)){
                 changeQualityWithinLimits(item, 1);
                 if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (item.sellIn < 6) {
-                        changeQualityWithinLimits(item, 2);
-                    } else if (item.sellIn < 11) {
-                        changeQualityWithinLimits(item, 1);
-                    }
+                    handleBackstageQualityChange(item);
                 }
             } else {
                 changeQualityWithinLimits(item, -1);
@@ -49,6 +46,14 @@ class GildedRose {
                 }
             }
 
+        }
+    }
+
+    private void handleBackstageQualityChange(Item item) {
+        if (item.sellIn < 6) {
+            changeQualityWithinLimits(item, 2);
+        } else if (item.sellIn < 11) {
+            changeQualityWithinLimits(item, 1);
         }
     }
 
@@ -73,12 +78,6 @@ class GildedRose {
     }
 
     private boolean qualityIncreasesAsItemAges(Item item){
-//        if (item.name.equals("Aged Brie")){
-//            return true;
-//        } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")){
-//            return true;
-//        }
-//        return false;
-        return itemsIncreaseValueAsTheyAge.contains(item.name);
+        return itemsIncreaseQualityAsTheyAge.contains(item.name);
     }
 }
