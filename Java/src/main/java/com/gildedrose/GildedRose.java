@@ -1,6 +1,5 @@
 package com.gildedrose;
 
-import java.util.ArrayList;
 
 class GildedRose {
     Item[] items;
@@ -8,63 +7,71 @@ class GildedRose {
     int minAllowedQuality = 0;
     int maxAllowedQuality = 50;
 
-    ArrayList<String> itemsIncreaseQualityAsTheyAge;
 
     public GildedRose(Item[] items) {
         this.items = items;
-        itemsIncreaseQualityAsTheyAge = new ArrayList<>();
-        itemsIncreaseQualityAsTheyAge.add("Backstage passes to a TAFKAL80ETC concert");
-        itemsIncreaseQualityAsTheyAge.add("Aged Brie");
     }
 
     public void updateQuality() {
 
         for (Item item : items) {
 
-            if (handledItemAsSpecialCase(item)){
-                continue;
-            }
+            switch (item.name){
+                case ("Aged Brie"):
+                    changeQualityOfBrie(item);
+                    break;
+                case ("Backstage passes to a TAFKAL80ETC concert"):
+                    changeQualityOfBackstage(item);
+                    break;
+                case ("Sulfuras, Hand of Ragnaros"):
+                    changeQualityOfSulfuras(item);
+                    continue;
+                case ("foo"):
+                    changeQualityOffFoo(item);
+                    break;
+                default:
+                    changeQualityOfNormalItem(item);
+                    break;
+        }
 
-            if (qualityIncreasesAsItemAges(item)){
-                changeQualityWithinLimits(item, 1);
-                if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    handleBackstageQualityChange(item);
-                }
-            } else {
-                changeQualityWithinLimits(item, -1);
-            }
-
-            item.sellIn = item.sellIn - 1;
-
-            if (item.sellIn < 0) {
-                if (item.name.equals("Aged Brie")){
-                    changeQualityWithinLimits(item, 1);
-                } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")){
-                    item.quality = 0;
-                } else {
-                    changeQualityWithinLimits(item, -1);
-                }
-            }
+        item.sellIn = item.sellIn - 1;
 
         }
     }
 
-    private void handleBackstageQualityChange(Item item) {
-        if (item.sellIn < 6) {
+    private void changeQualityOfBrie(Item item){
+        if (item.sellIn <= 0){
             changeQualityWithinLimits(item, 2);
-        } else if (item.sellIn < 11) {
+        } else {
             changeQualityWithinLimits(item, 1);
         }
     }
 
-    private boolean handledItemAsSpecialCase(Item item){
-        if (item.name.equals("Sulfuras, Hand of Ragnaros")){
-            return true;
-        } else if(item.name.equals("foo")){
-            item.name = "fixme";
-            return true;
+    private void changeQualityOfBackstage(Item item){
+        if (item.sellIn <= 0){
+            item.quality = 0;
+        } else if (item.sellIn < 6) {
+            changeQualityWithinLimits(item, 3);
+        } else if (item.sellIn < 11) {
+            changeQualityWithinLimits(item, 2);
+        } else {
+            changeQualityWithinLimits(item, 1);
         }
-        return false;
+    }
+
+    private void changeQualityOfSulfuras(Item item){
+    }
+
+    private void changeQualityOffFoo(Item item){
+        item.name = "fixme";
+    }
+
+    private void changeQualityOfNormalItem(Item item){
+        if (item.sellIn > 0) {
+            changeQualityWithinLimits(item, -1);
+        } else {
+            changeQualityWithinLimits(item, -2);
+        }
     }
 
     private void changeQualityWithinLimits(Item item, int amount_to_change){
@@ -77,7 +84,4 @@ class GildedRose {
         }
     }
 
-    private boolean qualityIncreasesAsItemAges(Item item){
-        return itemsIncreaseQualityAsTheyAge.contains(item.name);
-    }
 }
