@@ -26,9 +26,6 @@ class GildedRose {
                 case ("Sulfuras, Hand of Ragnaros"):
                     changeQualityOfSulfuras(item);
                     continue;
-                case ("foo"):
-                    changeQualityOffFoo(item);
-                    break;
                 default:
                     changeQualityOfNormalItem(item);
                     break;
@@ -41,9 +38,9 @@ class GildedRose {
 
     private void changeQualityOfBrie(Item item){
         if (item.sellIn <= 0){
-            changeQualityWithinLimits(item, 2);
+            setQualityWithinLimits(item, 2);
         } else {
-            changeQualityWithinLimits(item, 1);
+            setQualityWithinLimits(item, 1);
         }
     }
 
@@ -51,30 +48,27 @@ class GildedRose {
         if (item.sellIn <= 0){
             item.quality = 0;
         } else if (item.sellIn < 6) {
-            changeQualityWithinLimits(item, 3);
+            setQualityWithinLimits(item, 3);
         } else if (item.sellIn < 11) {
-            changeQualityWithinLimits(item, 2);
+            setQualityWithinLimits(item, 2);
         } else {
-            changeQualityWithinLimits(item, 1);
+            setQualityWithinLimits(item, 1);
         }
     }
 
     private void changeQualityOfSulfuras(Item item){
     }
 
-    private void changeQualityOffFoo(Item item){
-        item.name = "fixme";
-    }
 
     private void changeQualityOfNormalItem(Item item){
         if (item.sellIn > 0) {
-            changeQualityWithinLimits(item, -1);
+            setQualityWithinLimits(item, -1);
         } else {
-            changeQualityWithinLimits(item, -2);
+            setQualityWithinLimits(item, -2);
         }
     }
 
-    private void changeQualityWithinLimits(Item item, int amount_to_change){
+    private void setQualityWithinLimits(Item item, int amount_to_change){
         item.quality += amount_to_change;
 
         if (item.quality < minAllowedQuality){
