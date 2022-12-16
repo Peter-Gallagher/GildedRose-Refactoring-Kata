@@ -8,9 +8,9 @@ public class Item {
 
     public int quality;
 
-    private final int minAllowedQuality = 0;
+    public int minAllowedQuality = 0;
 
-    private final int maxAllowedQuality = 50;
+    public int maxAllowedQuality = 50;
 
     public Item(String name, int sellIn, int quality) {
         this.name = name;
@@ -18,6 +18,9 @@ public class Item {
         this.quality = quality;
     }
 
+    public void update(){
+        // To be implemented by children
+    }
     public void setQualityWithinLimits(int amount_to_change){
         quality += amount_to_change;
 

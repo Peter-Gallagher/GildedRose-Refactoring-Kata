@@ -1,13 +1,10 @@
 package com.gildedrose;
 
-public class Sulfuras implements TypedItem{
+public class Sulfuras extends Item implements TypedItem{
 
-    Item item;
-    ItemValueSetter valueSetter;
 
-    public Sulfuras(Item item, ItemValueSetter valueSetter) {
-        this.item = item;
-        this.valueSetter = valueSetter;
+    public Sulfuras(String name, int sellIn, int quality) {
+        super(name, sellIn, quality);
     }
 
     @Override
