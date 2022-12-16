@@ -68,10 +68,12 @@ class GildedRoseTest {
 
     @Test
     void agedBrieWithNegativeSellinShouldIncreaseInQuality() {
-        Item[] items = new Item[] { new Item("Aged Brie", -5, 25) };
+        Item[] items = new Item[] { new Item("Aged Brie", -5, 25),
+        new Item("Aged Brie", 0, 30)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(27, app.items[0].quality);
+        assertEquals(32, app.items[1].quality);
     }
 
     @Test
@@ -80,6 +82,14 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(50, app.items[0].quality);
+    }
+
+    @Test
+    void backstagePassesShouldIncreaseQualityBy1When11DaysOrMore() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 11, 5) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(6, app.items[0].quality);
     }
 
     @Test
